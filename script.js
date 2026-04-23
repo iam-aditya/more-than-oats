@@ -7,7 +7,7 @@ const RESTAURANT_NAME = "More Than Oats";
 // ---- BANNER IMAGES ----
 // Drop your photos in the images/ folder and list them here.
 // They auto-scroll every 3 seconds.
-const bannerImages = ["images/banner1.png", "images/banner2.jpg", "images/banner3.jpg", "images/banner4.jpg"];
+const bannerImages = ["images/banner12.png", "images/banner2.png", "images/banner3.png"];
 
 /* ============================================================
    MENU DATA
@@ -428,8 +428,12 @@ function toggleAddon(groupId, addonId, isRadio, min, max) {
 	const sel = sheetSelections[groupId] || new Set();
 
 	if (isRadio) {
-		sel.clear();
-		sel.add(addonId);
+		if (min === 0 && sel.has(addonId)) {
+			sel.clear(); // optional radio — allow unselect
+		} else {
+			sel.clear();
+			sel.add(addonId);
+		}
 	} else {
 		if (sel.has(addonId)) {
 			if (sel.size > min) sel.delete(addonId);
