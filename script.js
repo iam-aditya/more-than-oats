@@ -22,7 +22,7 @@ const categories = [
 	{ id: "fruit_salad", name: "Fruit Salad", addonGroupIds: [] },
 	{ id: "chia", name: "Chia Pudding", addonGroupIds: ["sweetener", "milk"] },
 	{ id: "dessert", name: "Dessert Oatbowl", addonGroupIds: [] },
-	{ id: "milkshake", name: "Protein Milkshake", addonGroupIds: [] },
+	{ id: "milkshake", name: "Protein Milkshake", addonGroupIds: ["protein_powder"] },
 	{ id: "halfhalf", name: "Half & Half Oatmeal", addonGroupIds: ["size", "dry_fruits", "seeds", "protein_powder", "extras", "sweetener", "milk"] },
 ];
 
@@ -131,7 +131,7 @@ const items = [
 	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate", description: "Dense chocolate smoothie bowl — rich, filling, and nutritious", price: 190, image: "images/choco_smoothie.jpeg" },
 
 	// FRUIT SALAD
-	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon fruit salad with mint and a sprinkle of spice", price: 210, image: "images/watermelon_salad.png" },
+	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon fruit salad with mint and a sprinkle of spice", price: 90, image: "images/watermelon_salad.png" },
 
 	// CHIA PUDDING
 	{ id: "chia-mango", categoryId: "chia", name: "Mango", description: "Overnight chia pudding layered with fresh mango — light and filling", price: 210, image: "images/mango_chia.jpeg" },
