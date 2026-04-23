@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>More Than Oats</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<!-- HEADER -->
+		<header id="app-header">
+			<div class="logo-wrap">
+				<img src="images/logo2.jpg" alt="More Than Oats" class="logo-img" />
+			</div>
+			<button class="cart-icon-btn" id="cart-icon-btn" onclick="showCart()">
+				<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="9" cy="21" r="1" />
+					<circle cx="20" cy="21" r="1" />
+					<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+				</svg>
+				<span class="cart-badge hidden" id="cart-badge">0</span>
+			</button>
+		</header>
+
+		<!-- MENU VIEW -->
+		<div id="menu-view">
+			<div id="hero-carousel">
+				<div id="carousel-track-wrap">
+					<div id="carousel-track"></div>
+				</div>
+				<div id="carousel-dots"></div>
+			</div>
+			<div class="sticky-pills-wrap">
+				<div class="category-pills" id="category-pills"></div>
+			</div>
+			<div class="menu-list" id="menu-list"></div>
+			<div class="menu-bottom-space"></div>
+		</div>
+
+		<!-- CART VIEW -->
+		<div id="cart-view" class="hidden"></div>
+
+		<!-- BOTTOM SHEET BACKDROP -->
+		<div id="sheet-backdrop" class="hidden" onclick="closeSheet()"></div>
+
+		<!-- BOTTOM SHEET -->
+		<div id="item-sheet" class="hidden">
+			<div class="sheet-handle-wrap" onclick="closeSheet()">
+				<div class="sheet-handle"></div>
+			</div>
+			<div id="sheet-content" class="sheet-scroll"></div>
+			<div class="sheet-footer">
+				<button class="sheet-add-btn" id="sheet-add-btn" onclick="addFromSheet()">Add ₹0</button>
+			</div>
+		</div>
+
+		<!-- STICKY CART BAR -->
+		<div id="cart-bar" class="hidden" onclick="showCart()">
+			<div class="cart-bar-left">
+				<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="9" cy="21" r="1" />
+					<circle cx="20" cy="21" r="1" />
+					<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+				</svg>
+				<span id="cart-bar-count">0 ITEM</span>
+				<span id="cart-bar-price">₹0</span>
+			</div>
+			<span class="cart-bar-view">View Cart ›</span>
+		</div>
+
+		<script src="script.js"></script>
+	</body>
+</html>
