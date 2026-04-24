@@ -57,7 +57,7 @@ const categories = [
 	{ id: "chia", name: "Chia Pudding", addonGroupIds: ["sweetener", "milk"] },
 	{ id: "dessert", name: "Dessert Oatbowl", addonGroupIds: [] },
 	{ id: "milkshake", name: "Protein Milkshake", addonGroupIds: ["protein_powder"] },
-	{ id: "halfhalf", name: "Half & Half Oatmeal", addonGroupIds: ["size", "dry_fruits", "seeds", "protein_powder", "extras", "sweetener", "milk"] },
+	{ id: "halfhalf", name: "Half & Half Oatmeal", addonGroupIds: ["hh_flavors"] },
 ];
 
 const addonGroups = [
@@ -136,6 +136,26 @@ const addonGroups = [
 			{ id: "dairy", name: "Dairy", price: 0, default: true },
 			{ id: "almond-milk", name: "Almond", price: 60, default: false },
 			{ id: "oat-milk", name: "Oat", price: 40, default: false },
+		],
+	},
+	{
+		id: "hh_flavors",
+		name: "Choose Your Flavours",
+		min: 2,
+		max: 2,
+		addons: [
+			{ id: "hh-choc-pb",   name: "Chocolate Peanut Butter", price: 0, default: false },
+			{ id: "hh-choc-coff", name: "Chocolate Coffee",        price: 0, default: false },
+			{ id: "hh-hazelnut",  name: "Chocolate Hazelnut",      price: 0, default: false },
+			{ id: "hh-morning",   name: "Morning Coffee",          price: 0, default: false },
+			{ id: "hh-gulkand",   name: "Gulkand Garden",          price: 0, default: false },
+			{ id: "hh-date-choc", name: "Date Chocolate",          price: 0, default: false },
+			{ id: "hh-banana",    name: "Banana Bread",            price: 0, default: false },
+			{ id: "hh-apple",     name: "Apple Crumble",           price: 0, default: false },
+			{ id: "hh-rasp-pb",   name: "Raspberry Peanut Butter", price: 0, default: false },
+			{ id: "hh-blueberry", name: "Blueberry Pie",           price: 0, default: false },
+			{ id: "hh-mango-coc", name: "Mango Coconut Crunch",    price: 0, default: false },
+			{ id: "hh-mango-choc",name: "Mango Chocolate",         price: 0, default: false },
 		],
 	},
 ];
@@ -432,7 +452,7 @@ function renderItemCard(item) {
 	const totalQty = cartEntries.reduce((s, e) => s + e.quantity, 0);
 
 	return `
-    <div class="item-card" id="card-${item.id}">
+    <div class="item-card" id="card-${item.id}" onclick="openSheet('${item.id}')">
       <div class="item-info">
         <div class="item-name">${item.name}</div>
         <div class="item-desc">${item.description}</div>
@@ -449,7 +469,7 @@ function renderItemCard(item) {
                <span>${totalQty}</span>
                <button onclick="event.stopPropagation(); openSheet('${item.id}')">+</button>
              </div>`
-						: `<button class="add-btn" onclick="openSheet('${item.id}')">ADD</button>`
+						: `<button class="add-btn" onclick="event.stopPropagation(); openSheet('${item.id}')">ADD</button>`
 				}
       </div>
     </div>
@@ -576,7 +596,7 @@ function toggleAddon(groupId, addonId, isRadio, min, max) {
 		}
 	} else {
 		if (sel.has(addonId)) {
-			if (sel.size > min) sel.delete(addonId);
+			sel.delete(addonId);
 		} else {
 			if (sel.size < max) sel.add(addonId);
 		}
@@ -616,13 +636,11 @@ function updateSheetButton(groups) {
 	const price = (item?.price || 0) + sheetAddonTotal();
 	const valid = sheetIsValid(groups);
 
+	btn.textContent = `Add ₹${price} ›`;
 	if (valid) {
-		btn.textContent = `Add ₹${price} ›`;
 		btn.disabled = false;
 		btn.classList.remove("btn-disabled");
 	} else {
-		const unsatisfied = groups.find((g) => (sheetSelections[g.id]?.size || 0) < g.min);
-		btn.textContent = unsatisfied ? `Choose at least ${unsatisfied.min} from ${unsatisfied.name}` : `Add ₹${price} ›`;
 		btn.disabled = true;
 		btn.classList.add("btn-disabled");
 	}
@@ -804,7 +822,7 @@ function renderCart() {
       <div class="bill-row"><span>Subtotal</span><span>₹${total}</span></div>
       ${!appliedPromo && calcAutoDiscount() > 0 ? `<div class="bill-row"><span>Offer 🏷</span><span class="discount-tag">-₹${calcAutoDiscount()}</span></div>` : ""}
       ${appliedPromo ? `<div class="bill-row"><span class="promo-applied-label"><span class="promo-code-chip">${appliedPromo.code}</span></span><span class="discount-tag">-₹${appliedPromo.discountAmount} <button class="promo-remove-btn" onclick="removePromoCode()">✕</button></span></div>` : ""}
-      <div class="bill-row"><span>Delivery</span><span class="free-tag">Free</span></div>
+      <div class="bill-row"><span>Delivery</span><span><s class="delivery-strike">₹50</s>&nbsp;<span class="free-tag">₹0</span></span></div>
       <div class="bill-divider"></div>
       <div class="bill-row bill-total"><span>Total</span><span>₹${total - cartDiscount()}</span></div>
     </div>
@@ -828,6 +846,7 @@ function renderCart() {
       Send Order on WhatsApp →
     </button>
     <p class="wa-note">Opens WhatsApp with your order pre-filled</p>
+    <p class="delivery-note">🛵 We deliver via Rapido and bear delivery charges up to ₹50. For distances beyond that, additional charges will apply based on your address.</p>
   `;
 }
 
@@ -890,7 +909,9 @@ function buildWhatsAppMessage() {
 	msg += `Subtotal: ₹${total}\n`;
 	if (discount > 0 && !appliedPromo) msg += `Offer 🏷: -₹${discount}\n`;
 	if (appliedPromo) msg += `Promo (${appliedPromo.code}): -₹${appliedPromo.discountAmount}\n`;
-	msg += `*Total: ₹${total - discount}*`;
+	msg += `Delivery: ₹0 (we cover up to ₹50 via Rapido)\n`;
+	msg += `*Total: ₹${total - discount}*\n\n`;
+	msg += `_Note: Delivery charges beyond ₹50 will be added based on your address._`;
 
 	return msg;
 }

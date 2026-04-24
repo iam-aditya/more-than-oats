@@ -232,7 +232,10 @@ input { font-family: inherit; }
   background: var(--card-bg);
   border-bottom: 1px solid var(--border);
   gap: 12px;
+  cursor: pointer;
 }
+
+.item-card:active { background: #fdf0f5; }
 
 .item-info { flex: 1; min-width: 0; }
 
@@ -780,6 +783,13 @@ input { font-family: inherit; }
   font-weight: 700;
 }
 
+.delivery-strike {
+  color: var(--text-muted);
+  font-weight: 500;
+  text-decoration: line-through;
+  font-size: 13px;
+}
+
 .bill-divider {
   height: 0;
   border-top: 1.5px dashed var(--border);
@@ -822,8 +832,18 @@ input { font-family: inherit; }
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 10px;
-  padding-bottom: 24px;
   letter-spacing: 0.2px;
+}
+
+.delivery-note {
+  margin: 10px 16px 24px;
+  padding: 12px 14px;
+  background: #f7f7f7;
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  border: 1px solid var(--border);
 }
 
 /* Empty cart */
