@@ -122,13 +122,13 @@ const items = [
 	{ id: "mango-choc", categoryId: "oatmeal", name: "Mango Chocolate", description: " Loaded with juicy mango cubes and creamy chocolate oats, this bowl combines tropical sweetness with rich cocoa flavours. Finished with pista and crunchy seeds for the perfect texture.", price: 210, image: "images/mango_choco_oatmeal.jpeg" },
 
 	// YOGURT BOWL
-	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit", description: "Creamy yogurt topped with a medley of fresh seasonal fruits", price: 210, image: "images/mixed_fruit_yogurt.png" },
-	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry", description: "Thick yogurt loaded with fresh mixed berries and granola", price: 220, image: "images/mixed_berry_yogurt.png" },
-	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate", description: "Velvety chocolate yogurt bowl with peanut butter and toppings", price: 210, image: "images/chocolate_peanut_butter_yogurt.png" },
+	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit", description: "Protein rich yogurt layered with fresh fruits like apple, banana, pomegranate, finished with granola for a nourishing, fiber packed and guilt free treat.", price: 210, image: "images/mixed_fruit_yogurt.png" },
+	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry", description: "Creamy yogurt topped with juicy blueberries and tangy raspberries, finished with crunchy granola a perfect balance of sweet, tart and wholesome goodness packed with antioxidants.", price: 220, image: "images/mixed_berry_yogurt.png" },
+	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate", description: "Creamy chocolate yogurt topped with fresh banana slices, crunchy chocolate granola, rich chocolate chips and a smooth peanut butter drizzle, offering a perfect balance of indulgent flavour and wholesome nutrition.", price: 210, image: "images/chocolate_peanut_butter_yogurt.png" },
 
 	// SMOOTHIE BOWL
-	{ id: "sb-mango", categoryId: "smoothie", name: "Tropical Mango", description: "Thick blended tropical mango smoothie bowl with seeds and toppings", price: 220, image: "images/mango_smoothie.png" },
-	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate", description: "Dense chocolate smoothie bowl — rich, filling, and nutritious", price: 190, image: "images/choco_smoothie.jpeg" },
+	{ id: "sb-mango", categoryId: "smoothie", name: "Tropical Mango", description: "A thick, creamy smoothie made with ripe, naturally sweet mangoes. Topped with juicy mango chunks, crunchy muesli, and delicate coconut flakes for a refreshing tropical crunch. Light, wholesome, and perfect for a guilt-free treat.", price: 220, image: "images/mango_smoothie.png" },
+	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate", description: "Creamy chocolate smoothie bowl blended with oats, chocolate and topped with crunchy muesli, seasonal fruit, chia seed, dark chocolate, crunchy peanut butter and no added sugar.", price: 190, image: "images/choco_smoothie.jpeg" },
 
 	// FRUIT SALAD
 	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon fruit salad with mint and a sprinkle of spice", price: 90, image: "images/watermelon_salad.png" },
