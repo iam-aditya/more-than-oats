@@ -125,6 +125,7 @@ const addonGroups = [
 		addons: [
 			{ id: "honey", name: "Honey", price: 0, default: true },
 			{ id: "monk-fruit", name: "Monk Fruit", price: 15, default: false },
+			{ id: "unsweetened", name: "Unsweetened", price: 0, default: false },
 		],
 	},
 	{
