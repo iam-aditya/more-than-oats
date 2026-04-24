@@ -185,20 +185,20 @@ const items = [
 	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate", description: "Creamy chocolate smoothie bowl blended with oats, chocolate and topped with crunchy muesli, seasonal fruit, chia seed, dark chocolate, crunchy peanut butter and no added sugar.", price: 190, image: "images/choco_smoothie.jpeg" },
 
 	// FRUIT SALAD
-	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon fruit salad with mint and a sprinkle of spice", price: 90, image: "images/watermelon_salad.png" },
+	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon cubes tossed with feta cheese, mint leaves for a cooling, mildly sweet and salty salad.", price: 90, image: "images/watermelon_salad.png" },
 
 	// CHIA PUDDING
-	{ id: "chia-mango", categoryId: "chia", name: "Mango", description: "Overnight chia pudding layered with fresh mango — light and filling", price: 210, image: "images/mango_chia.jpeg" },
+	{ id: "chia-mango", categoryId: "chia", name: "Mango", description: "Silky smooth blended chia pudding layered with sweet mango pure, topped with fresh mango chunks and dry fruits. Naturally rich in fibre and nutrients. Light, filling and perfect for a healthy indulgence.", price: 210, image: "images/mango_chia.jpeg" },
 
 	// DESSERT OATBOWL
-	{ id: "cookies", categoryId: "dessert", name: "Cream and Cookies", description: "Creamy oat-based cookies-and-cream dessert bowl", price: 150, image: "images/cream_n_cookies.jpg" },
-	{ id: "tiramisu", categoryId: "dessert", name: "Tiramisu", description: "Classic layered Italian tiramisu with espresso and mascarpone", price: 150, image: "images/tiramisu.png" },
-	{ id: "snickers", categoryId: "dessert", name: "Snickers", description: "Indulgent snickers-inspired oat dessert with caramel and chocolate", price: 150, image: "images/snickers.png" },
+	{ id: "cookies", categoryId: "dessert", name: "Cream and Cookies", description: " Creamy oatmeal made with creamy instant oats, milk, honey, chia seeds, layered Greek yoghurt, topped with chocolate chips and crunchy Oreo cookies.", price: 150, image: "images/cream_n_cookies.jpg" },
+	{ id: "tiramisu", categoryId: "dessert", name: "Tiramisu", description: "Replace your regular cake bread with oats soaked in coffee and cocoa and swap the cream for vanilla flavored Greek yogurt and have a cheat dessert without any guilt.", price: 150, image: "images/tiramisu.png" },
+	{ id: "snickers", categoryId: "dessert", name: "Snickers", description: "Creamy oats topped with chocolate, date caramel and crunchy nuts. No added sugar, no guilt. The healthy snickers you did not know you needed.", price: 150, image: "images/snickers.png" },
 
 	// PROTEIN MILKSHAKE (with 15g MB Protein Powder included)
-	{ id: "ms-choc", categoryId: "milkshake", name: "Chocolate", description: "Chocolate milkshake with 15g MuscleBlaze protein powder included", price: 170, image: "images/chocolate_milkshake.png" },
-	{ id: "ms-berry", categoryId: "milkshake", name: "Berry", description: "Berry milkshake with 15g MuscleBlaze protein powder included", price: 200, image: "" },
-	{ id: "ms-mocha", categoryId: "milkshake", name: "Mocha", description: "Mocha milkshake with 15g MuscleBlaze protein powder included", price: 180, image: "" },
+	{ id: "ms-choc", categoryId: "milkshake", name: "Chocolate", description: "A creamy chocolate milkshake made with muscleblaze chocolate whey protein [15 g] and no added sugar. Deliciously nourishing and power packed.", price: 170, image: "images/chocolate_milkshake.png" },
+	{ id: "ms-berry", categoryId: "milkshake", name: "Berry", description: "A rich, creamy berry milkshake loaded with 15g muscleblaze whey protein goodness for a deliciously healthy boost anytime.", price: 200, image: "" },
+	{ id: "ms-mocha", categoryId: "milkshake", name: "Mocha", description: "A bold fusion of coffee and chocolate in a thick, creamy milkshake loaded with 15g Muscleblaze whey protein to boost your energy and keep you going.", price: 180, image: "" },
 
 	// HALF & HALF OATMEAL
 	{ id: "hh-300", categoryId: "halfhalf", name: "Half & Half — 300ml", description: "Choose any two oatmeal flavours in one 300ml bowl", price: 200, image: "images/halfnhalf_oatmeal.png" },
