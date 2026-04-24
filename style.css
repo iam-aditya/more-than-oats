@@ -362,7 +362,7 @@ input { font-family: inherit; }
   z-index: 201;
   background: #fff;
   border-radius: 20px 20px 0 0;
-  max-height: 92vh;
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
   transform: translateY(100%);

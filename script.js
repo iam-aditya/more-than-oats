@@ -68,7 +68,7 @@ const addonGroups = [
 		min: 0,
 		max: 1,
 		addons: [
-			{ id: "mb-30g", name: "MuscleBlaze Whey (30g)", price: 80, default: false },
+			{ id: "mb-30g", name: "MuscleBlaze Whey (30g)", price: 90, default: false },
 			{ id: "mb-20g", name: "MuscleBlaze Whey (20g)", price: 60, default: false },
 			{ id: "mb-15g", name: "MB Chocolate Whey (15g)", price: 50, default: false },
 		],
