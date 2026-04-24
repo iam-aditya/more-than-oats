@@ -9,6 +9,40 @@ const RESTAURANT_NAME = "More Than Oats";
 // They auto-scroll every 3 seconds.
 const bannerImages = ["images/banner12.png", "images/banner2.png", "images/banner3.png"];
 
+// ---- OFFERS ----
+// Add or remove offers here. All active offers are shown as pills below categories.
+const offers = [
+  {
+    id: "offer1",
+    label: "10% OFF up to ₹50 on orders above ₹300",
+    minCart: 300,
+    discountPercent: 10,
+    maxDiscount: 50,
+  },
+];
+
+// ---- PROMO CODES ----
+// type: "flat"    → flat ₹discount off on cart above minCart
+// type: "percent" → discountPercent% off up to maxDiscount on cart above minCart
+// expiry: "YYYY-MM-DD" — leave "" for no expiry
+const promoCodes = [
+  {
+    code: "OATS10",
+    type: "percent",
+    discountPercent: 10,
+    maxDiscount: 80,
+    minCart: 200,
+    expiry: "2026-12-31",
+  },
+  {
+    code: "FLAT50",
+    type: "flat",
+    discount: 50,
+    minCart: 300,
+    expiry: "2026-12-31",
+  },
+];
+
 /* ============================================================
    MENU DATA
    Edit categories, addonGroups, and items below.
@@ -158,6 +192,8 @@ let cart = []; // Array of cart entries (see addFromSheet for structure)
 let activeCategory = "all";
 let sheetItemId = null;
 let sheetSelections = {}; // { groupId: Set<addonId> }
+let appliedPromo = null;  // { code, discountAmount } or null
+let showPromoInput = false;
 
 let carouselIndex = 0;
 let carouselTimer = null;
@@ -167,6 +203,7 @@ let carouselTimer = null;
    ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
 	initCarousel();
+	renderOfferStrip();
 	renderMenu();
 	updateCartUI();
 });
@@ -242,6 +279,109 @@ function startCarouselTimer() {
 function resetCarouselTimer() {
 	clearInterval(carouselTimer);
 	startCarouselTimer();
+}
+
+/* ============================================================
+   OFFERS
+   ============================================================ */
+function calcAutoDiscount(subtotal) {
+	const s = subtotal ?? cartTotal();
+	let discount = 0;
+	offers.forEach((o) => {
+		if (s >= o.minCart)
+			discount += Math.min(Math.floor((s * o.discountPercent) / 100), o.maxDiscount);
+	});
+	return discount;
+}
+
+function cartDiscount(subtotal) {
+	if (appliedPromo) return appliedPromo.discountAmount;
+	return calcAutoDiscount(subtotal);
+}
+
+function nextOfferNudge(subtotal) {
+	if (appliedPromo) return null;
+	const s = subtotal ?? cartTotal();
+	const next = offers
+		.filter((o) => s < o.minCart)
+		.sort((a, b) => a.minCart - b.minCart)[0];
+	if (!next) return null;
+	return `🏷 Add ₹${next.minCart - s} more to get ${next.discountPercent}% off`;
+}
+
+function calcPromoDiscount(promo, cartValue) {
+	if (promo.type === "flat") return promo.discount;
+	if (promo.type === "percent")
+		return Math.min(Math.floor((cartValue * promo.discountPercent) / 100), promo.maxDiscount);
+	return 0;
+}
+
+function togglePromoInput() {
+	showPromoInput = !showPromoInput;
+	renderCart();
+	if (showPromoInput) setTimeout(() => document.getElementById("promo-input")?.focus(), 50);
+}
+
+function applyPromoCode() {
+	const input = document.getElementById("promo-input");
+	const code = (input?.value || "").trim().toUpperCase();
+	if (!code) return;
+
+	const promo = promoCodes.find((p) => p.code.toUpperCase() === code);
+
+	if (!promo) {
+		setPromoMsg("Invalid promo code. Please check and try again.", "error");
+		return;
+	}
+
+	if (promo.expiry && new Date(promo.expiry) < new Date()) {
+		setPromoMsg("This promo code has expired.", "error");
+		return;
+	}
+
+	const total = cartTotal();
+	if (total < promo.minCart) {
+		setPromoMsg(`Add ₹${promo.minCart - total} more to use this code.`, "warn");
+		return;
+	}
+
+	const discountAmount = calcPromoDiscount(promo, total);
+	appliedPromo = { code: promo.code, discountAmount };
+	showPromoInput = false;
+	renderCart();
+}
+
+function removePromoCode() {
+	appliedPromo = null;
+	showPromoInput = false;
+	renderCart();
+}
+
+function setPromoMsg(msg, type) {
+	const el = document.getElementById("promo-msg");
+	if (el) { el.textContent = msg; el.className = `promo-msg promo-${type}`; }
+}
+
+function renderOfferStrip() {
+	const strip = document.getElementById("offer-strip");
+	if (!strip || !offers.length) return;
+	strip.innerHTML = offers
+		.map((o) => `<div class="offer-pill">🏷 ${o.label}</div>`)
+		.join("");
+}
+
+function updateCartNudge() {
+	const nudge = document.getElementById("cart-nudge");
+	if (!nudge) return;
+	const cartViewOpen = !document.getElementById("cart-view").classList.contains("hidden");
+	if (cartViewOpen) { nudge.classList.add("hidden"); return; }
+	const msg = cartItemCount() > 0 ? nextOfferNudge() : null;
+	if (msg) {
+		nudge.textContent = msg;
+		nudge.classList.remove("hidden");
+	} else {
+		nudge.classList.add("hidden");
+	}
 }
 
 /* ============================================================
@@ -486,6 +626,26 @@ function updateSheetButton(groups) {
 		btn.disabled = true;
 		btn.classList.add("btn-disabled");
 	}
+
+	// Show nudge above Add button: project cart total if this item is added
+	const currentCart = cartTotal();
+	const projectedTotal = currentCart + price;
+	const nudgeMsg = currentCart === 0
+		? (offers.length ? `🏷 ${offers[0].label}` : null)
+		: nextOfferNudge(projectedTotal);
+	let nudgeEl = document.getElementById("sheet-offer-nudge");
+	if (!nudgeEl) {
+		nudgeEl = document.createElement("div");
+		nudgeEl.id = "sheet-offer-nudge";
+		nudgeEl.className = "sheet-nudge";
+		btn.parentElement.insertBefore(nudgeEl, btn);
+	}
+	if (nudgeMsg) {
+		nudgeEl.textContent = nudgeMsg;
+		nudgeEl.style.display = "block";
+	} else {
+		nudgeEl.style.display = "none";
+	}
 }
 
 function addFromSheet() {
@@ -555,6 +715,7 @@ function cartItemCount() {
 function updateCartUI() {
 	const count = cartItemCount();
 	const total = cartTotal();
+	const cartViewOpen = !document.getElementById("cart-view").classList.contains("hidden");
 
 	const badge = document.getElementById("cart-badge");
 	if (count > 0) {
@@ -565,13 +726,15 @@ function updateCartUI() {
 	}
 
 	const bar = document.getElementById("cart-bar");
-	if (count > 0) {
+	if (count > 0 && !cartViewOpen) {
 		bar.classList.remove("hidden");
 		document.getElementById("cart-bar-count").textContent = `${count} ${count === 1 ? "ITEM" : "ITEMS"}`;
 		document.getElementById("cart-bar-price").textContent = `₹${total}`;
 	} else {
 		bar.classList.add("hidden");
 	}
+
+	updateCartNudge();
 }
 
 function quickDecrement(itemId) {
@@ -597,6 +760,7 @@ function showCart() {
 	if (cart.length === 0) return;
 	document.getElementById("menu-view").classList.add("hidden");
 	document.getElementById("cart-bar").classList.add("hidden");
+	document.getElementById("cart-nudge").classList.add("hidden");
 	document.getElementById("cart-view").classList.remove("hidden");
 	renderCart();
 	window.scrollTo(0, 0);
@@ -606,6 +770,7 @@ function showMenu() {
 	document.getElementById("cart-view").classList.add("hidden");
 	document.getElementById("menu-view").classList.remove("hidden");
 	updateCartUI();
+	renderMenuList();
 }
 
 function renderCart() {
@@ -634,21 +799,32 @@ function renderCart() {
       ${cart.map(renderCartEntry).join("")}
     </div>
 
-    <div class="cart-phone-section">
-      <label>📱 Your Phone Number</label>
-      <input type="tel" id="phone-input" maxlength="10" inputmode="numeric" pattern="[0-9]*"
-             placeholder="Enter 10-digit mobile number" oninput="updateSendBtn()">
-    </div>
-
     <div class="bill-summary">
       <h3>Bill Summary</h3>
       <div class="bill-row"><span>Subtotal</span><span>₹${total}</span></div>
+      ${!appliedPromo && calcAutoDiscount() > 0 ? `<div class="bill-row"><span>Offer 🏷</span><span class="discount-tag">-₹${calcAutoDiscount()}</span></div>` : ""}
+      ${appliedPromo ? `<div class="bill-row"><span class="promo-applied-label"><span class="promo-code-chip">${appliedPromo.code}</span></span><span class="discount-tag">-₹${appliedPromo.discountAmount} <button class="promo-remove-btn" onclick="removePromoCode()">✕</button></span></div>` : ""}
       <div class="bill-row"><span>Delivery</span><span class="free-tag">Free</span></div>
       <div class="bill-divider"></div>
-      <div class="bill-row bill-total"><span>Total</span><span>₹${total}</span></div>
+      <div class="bill-row bill-total"><span>Total</span><span>₹${total - cartDiscount()}</span></div>
     </div>
 
-    <button class="whatsapp-btn" id="send-btn" onclick="sendToWhatsApp()" disabled>
+    ${!appliedPromo ? `
+    <div class="promo-section">
+      ${!showPromoInput ? `
+        <button class="promo-toggle-btn" onclick="togglePromoInput()">🏷 Apply Promo Code</button>
+      ` : `
+        <div class="promo-input-wrap">
+          <input id="promo-input" class="promo-input" type="text" placeholder="Enter promo code"
+                 style="text-transform:uppercase" onkeydown="if(event.key==='Enter') applyPromoCode()">
+          <button class="promo-apply-btn" onclick="applyPromoCode()">Apply</button>
+        </div>
+        <div id="promo-msg" class="promo-msg"></div>
+      `}
+    </div>
+    ` : ""}
+
+    <button class="whatsapp-btn" id="send-btn" onclick="sendToWhatsApp()">
       Send Order on WhatsApp →
     </button>
     <p class="wa-note">Opens WhatsApp with your order pre-filled</p>
@@ -684,23 +860,18 @@ function renderCartEntry(entry) {
 function cartQtyAndRefresh(cartId, delta) {
 	changeCartQty(cartId, delta);
 	if (cart.length === 0) {
+		appliedPromo = null;
+		showPromoInput = false;
 		showMenu();
 		return;
 	}
 	renderCart();
 }
 
-function updateSendBtn() {
-	const phone = document.getElementById("phone-input")?.value || "";
-	const btn = document.getElementById("send-btn");
-	if (btn) btn.disabled = !/^\d{10}$/.test(phone);
-}
-
 /* ============================================================
    WHATSAPP
    ============================================================ */
 function buildWhatsAppMessage() {
-	const phone = document.getElementById("phone-input")?.value || "";
 	const total = cartTotal();
 	let msg = `🛒 *Order from ${RESTAURANT_NAME}*\n\n`;
 
@@ -714,16 +885,17 @@ function buildWhatsAppMessage() {
 		msg += "\n";
 	});
 
+	const discount = cartDiscount();
 	msg += `───────────────\n`;
-	msg += `*Total: ₹${total}*\n\n`;
-	msg += `📱 Customer: ${phone}`;
+	msg += `Subtotal: ₹${total}\n`;
+	if (discount > 0 && !appliedPromo) msg += `Offer 🏷: -₹${discount}\n`;
+	if (appliedPromo) msg += `Promo (${appliedPromo.code}): -₹${appliedPromo.discountAmount}\n`;
+	msg += `*Total: ₹${total - discount}*`;
 
 	return msg;
 }
 
 function sendToWhatsApp() {
-	const phone = document.getElementById("phone-input")?.value || "";
-	if (!/^\d{10}$/.test(phone)) return;
 	const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage())}`;
 	window.open(url, "_blank");
 }
