@@ -258,11 +258,11 @@ function updateAuthIcon() {
 	const dot = document.getElementById("auth-dot");
 	if (!btn || !dot) return;
 	if (currentUser) {
+		btn.classList.remove("hidden");
 		dot.classList.remove("hidden");
-		btn.setAttribute("aria-label", "Signed in");
 	} else {
+		btn.classList.add("hidden");
 		dot.classList.add("hidden");
-		btn.setAttribute("aria-label", "Sign in");
 	}
 }
 

@@ -69,6 +69,7 @@ input { font-family: inherit; }
   padding: 4px;
   line-height: 0;
   opacity: 0.85;
+  justify-self: start;
 }
 
 .auth-icon-btn:active { opacity: 1; }
