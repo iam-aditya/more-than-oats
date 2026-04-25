@@ -72,6 +72,12 @@ input { font-family: inherit; }
   justify-self: start;
 }
 
+.auth-icon-btn.hidden {
+  display: block !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .auth-icon-btn:active { opacity: 1; }
 
 .auth-dot {
