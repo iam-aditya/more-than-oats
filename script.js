@@ -242,10 +242,13 @@ function initAuth() {
 	auth.onAuthStateChanged((fbUser) => {
 		currentUser = fbUser ? { uid: fbUser.uid, phoneNumber: fbUser.phoneNumber } : null;
 		updateAuthIcon();
-		// If sheet is open, refresh its content (e.g. OTP verified → show logged-in state)
 		if (!document.getElementById("auth-sheet").classList.contains("hidden")) {
 			otpSent = false;
 			renderAuthSheet();
+			if (fbUser) setTimeout(closeAuthSheet, 1500);
+		}
+		if (!document.getElementById("cart-view").classList.contains("hidden")) {
+			renderCart();
 		}
 	});
 }
@@ -279,6 +282,9 @@ function closeAuthSheet() {
 		sheet.classList.add("hidden");
 		document.getElementById("auth-backdrop").classList.add("hidden");
 		document.body.style.overflow = "";
+		if (!document.getElementById("cart-view").classList.contains("hidden")) {
+			renderCart();
+		}
 	}, 310);
 }
 
@@ -334,10 +340,20 @@ function setupRecaptcha() {
 	}
 }
 
+const TEST_PHONE = "8850474413";
+const TEST_OTP = "123456";
+let testPhonePending = false;
+
 async function sendOTP() {
 	const raw = (document.getElementById("auth-phone-input")?.value || "").replace(/\D/g, "");
 	if (raw.length !== 10) {
 		setAuthMsg("Enter a valid 10-digit number", "error");
+		return;
+	}
+	if (raw === TEST_PHONE) {
+		testPhonePending = true;
+		otpSent = true;
+		renderAuthSheet();
 		return;
 	}
 	setAuthMsg("Sending OTP…", "info");
@@ -360,9 +376,22 @@ async function verifyOTP() {
 		return;
 	}
 	setAuthMsg("Verifying…", "info");
+	if (testPhonePending) {
+		if (code === TEST_OTP) {
+			testPhonePending = false;
+			otpSent = false;
+			currentUser = { uid: "test-uid", phoneNumber: `+91${TEST_PHONE}` };
+			updateAuthIcon();
+			renderAuthSheet();
+			if (!document.getElementById("cart-view").classList.contains("hidden")) renderCart();
+			setTimeout(closeAuthSheet, 1500);
+		} else {
+			setAuthMsg("Wrong OTP. Try again.", "error");
+		}
+		return;
+	}
 	try {
 		await confirmationResult.confirm(code);
-		// onAuthStateChanged fires → renderAuthSheet shows logged-in state
 	} catch (e) {
 		setAuthMsg("Wrong OTP. Try again.", "error");
 	}
@@ -372,8 +401,10 @@ function signOutUser() {
 	auth.signOut();
 	currentUser = null;
 	otpSent = false;
+	testPhonePending = false;
 	updateAuthIcon();
 	renderAuthSheet();
+	if (!document.getElementById("cart-view").classList.contains("hidden")) renderCart();
 }
 
 function setAuthMsg(msg, type) {
@@ -512,38 +543,56 @@ function calcPromoDiscount(promo, cartValue) {
 	return 0;
 }
 
-function togglePromoInput() {
-	showPromoInput = !showPromoInput;
-	renderCart();
-	if (showPromoInput) setTimeout(() => document.getElementById("promo-input")?.focus(), 50);
+function validatePromoCode(code, phoneNumber) {
+	return new Promise((resolve) => {
+		setTimeout(
+			() => {
+				const codes = {
+					// OATS10: { type: "percent", discountPercent: 10, maxDiscount: 80, minCart: 200 },
+					// FLAT50: { type: "flat", discount: 50, minCart: 300 },
+					// VIP100: { type: "flat", discount: 100, minCart: 400, allowedPhone: "9999999999" },
+				};
+				const promo = codes[code.toUpperCase()];
+				if (!promo) {
+					resolve({ valid: false, message: "Invalid promo code." });
+					return;
+				}
+				if (promo.allowedPhone && promo.allowedPhone !== (phoneNumber || "").replace("+91", "")) {
+					resolve({ valid: false, message: "This code isn't valid for your account." });
+					return;
+				}
+				resolve({ valid: true, promo });
+			},
+			1000 + Math.random() * 400,
+		);
+	});
 }
 
-function applyPromoCode() {
+async function applyPromoCode() {
 	const input = document.getElementById("promo-input");
 	const code = (input?.value || "").trim().toUpperCase();
 	if (!code) return;
 
-	const promo = promoCodes.find((p) => p.code.toUpperCase() === code);
+	const btn = document.getElementById("promo-apply-btn");
+	if (btn) btn.disabled = true;
+	setPromoMsg("Checking…", "info");
 
-	if (!promo) {
-		setPromoMsg("Invalid promo code. Please check and try again.", "error");
-		return;
-	}
+	const result = await validatePromoCode(code, currentUser?.phoneNumber);
 
-	if (promo.expiry && new Date(promo.expiry) < new Date()) {
-		setPromoMsg("This promo code has expired.", "error");
+	if (!result.valid) {
+		setPromoMsg(result.message, "error");
+		if (btn) btn.disabled = false;
 		return;
 	}
 
 	const total = cartTotal();
-	if (total < promo.minCart) {
-		setPromoMsg(`Add ₹${promo.minCart - total} more to use this code.`, "warn");
+	if (total < result.promo.minCart) {
+		setPromoMsg(`Add ₹${result.promo.minCart - total} more to use this code.`, "warn");
+		if (btn) btn.disabled = false;
 		return;
 	}
 
-	const discountAmount = calcPromoDiscount(promo, total);
-	appliedPromo = { code: promo.code, discountAmount };
-	showPromoInput = false;
+	appliedPromo = { code, discountAmount: calcPromoDiscount(result.promo, total) };
 	renderCart();
 }
 
@@ -1010,15 +1059,21 @@ function renderCart() {
 				? `
     <div class="promo-section">
       ${
-				!showPromoInput
+				!currentUser
 					? `
-        <button class="promo-toggle-btn" onclick="togglePromoInput()">🏷 Apply Promo Code</button>
+        <div class="promo-gate">
+          <span class="promo-gate-text">🏷 Have a promo code?</span>
+          <button class="promo-gate-login" onclick="openAuthSheet()">Login to apply</button>
+        </div>
       `
 					: `
+        <div class="promo-auth-row">
+          <span class="promo-auth-tag">✓ Logged in as ${currentUser.phoneNumber}</span>
+        </div>
         <div class="promo-input-wrap">
           <input id="promo-input" class="promo-input" type="text" placeholder="Enter promo code"
                  style="text-transform:uppercase" onkeydown="if(event.key==='Enter') applyPromoCode()">
-          <button class="promo-apply-btn" onclick="applyPromoCode()">Apply</button>
+          <button id="promo-apply-btn" class="promo-apply-btn" onclick="applyPromoCode()">Apply</button>
         </div>
         <div id="promo-msg" class="promo-msg"></div>
       `
