@@ -340,7 +340,7 @@ function setupRecaptcha() {
 	}
 }
 
-const TEST_PHONE = "8850474413";
+const TEST_PHONE = "1234567890";
 const TEST_OTP = "123456";
 let testPhonePending = false;
 
