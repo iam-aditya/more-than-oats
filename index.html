@@ -13,6 +13,13 @@
 			<div class="logo-wrap">
 				<img src="images/logo2.jpg" alt="More Than Oats" class="logo-img" />
 			</div>
+			<button class="auth-icon-btn" id="auth-icon-btn" onclick="openAuthSheet()" aria-label="Sign in">
+				<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+					<circle cx="12" cy="7" r="4"/>
+				</svg>
+				<span class="auth-dot hidden" id="auth-dot"></span>
+			</button>
 			<button class="cart-icon-btn" id="cart-icon-btn" onclick="showCart()">
 				<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<circle cx="9" cy="21" r="1" />
@@ -56,6 +63,17 @@
 			</div>
 		</div>
 
+		<!-- AUTH SHEET BACKDROP -->
+		<div id="auth-backdrop" class="hidden" onclick="closeAuthSheet()"></div>
+
+		<!-- AUTH SHEET -->
+		<div id="auth-sheet" class="hidden">
+			<div class="sheet-handle-wrap" onclick="closeAuthSheet()">
+				<div class="sheet-handle"></div>
+			</div>
+			<div id="auth-sheet-content"></div>
+		</div>
+
 		<!-- OFFER NUDGE (above cart bar) -->
 		<div id="cart-nudge" class="hidden"></div>
 
@@ -73,6 +91,9 @@
 			<span class="cart-bar-view">View Cart ›</span>
 		</div>
 
+		<div id="recaptcha-container"></div>
+		<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 		<script src="script.js"></script>
 	</body>
 </html>

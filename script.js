@@ -12,13 +12,13 @@ const bannerImages = ["images/banner12.png", "images/banner2.png", "images/banne
 // ---- OFFERS ----
 // Add or remove offers here. All active offers are shown as pills below categories.
 const offers = [
-  {
-    id: "offer1",
-    label: "10% OFF up to ₹50 on orders above ₹300",
-    minCart: 300,
-    discountPercent: 10,
-    maxDiscount: 50,
-  },
+	{
+		id: "offer1",
+		label: "10% OFF up to ₹50 on orders above ₹300",
+		minCart: 300,
+		discountPercent: 10,
+		maxDiscount: 50,
+	},
 ];
 
 // ---- PROMO CODES ----
@@ -26,21 +26,21 @@ const offers = [
 // type: "percent" → discountPercent% off up to maxDiscount on cart above minCart
 // expiry: "YYYY-MM-DD" — leave "" for no expiry
 const promoCodes = [
-  {
-    code: "OATS10",
-    type: "percent",
-    discountPercent: 10,
-    maxDiscount: 80,
-    minCart: 200,
-    expiry: "2026-12-31",
-  },
-  {
-    code: "FLAT50",
-    type: "flat",
-    discount: 50,
-    minCart: 300,
-    expiry: "2026-12-31",
-  },
+	{
+		code: "OATS10",
+		type: "percent",
+		discountPercent: 10,
+		maxDiscount: 80,
+		minCart: 200,
+		expiry: "2026-12-31",
+	},
+	{
+		code: "FLAT50",
+		type: "flat",
+		discount: 50,
+		minCart: 300,
+		expiry: "2026-12-31",
+	},
 ];
 
 /* ============================================================
@@ -144,18 +144,18 @@ const addonGroups = [
 		min: 2,
 		max: 2,
 		addons: [
-			{ id: "hh-choc-pb",   name: "Chocolate Peanut Butter", price: 0, default: false },
-			{ id: "hh-choc-coff", name: "Chocolate Coffee",        price: 0, default: false },
-			{ id: "hh-hazelnut",  name: "Chocolate Hazelnut",      price: 0, default: false },
-			{ id: "hh-morning",   name: "Morning Coffee",          price: 0, default: false },
-			{ id: "hh-gulkand",   name: "Gulkand Garden",          price: 0, default: false },
-			{ id: "hh-date-choc", name: "Date Chocolate",          price: 0, default: false },
-			{ id: "hh-banana",    name: "Banana Bread",            price: 0, default: false },
-			{ id: "hh-apple",     name: "Apple Crumble",           price: 0, default: false },
-			{ id: "hh-rasp-pb",   name: "Raspberry Peanut Butter", price: 0, default: false },
-			{ id: "hh-blueberry", name: "Blueberry Pie",           price: 0, default: false },
-			{ id: "hh-mango-coc", name: "Mango Coconut Crunch",    price: 0, default: false },
-			{ id: "hh-mango-choc",name: "Mango Chocolate",         price: 0, default: false },
+			{ id: "hh-choc-pb", name: "Chocolate Peanut Butter", price: 0, default: false },
+			{ id: "hh-choc-coff", name: "Chocolate Coffee", price: 0, default: false },
+			{ id: "hh-hazelnut", name: "Chocolate Hazelnut", price: 0, default: false },
+			{ id: "hh-morning", name: "Morning Coffee", price: 0, default: false },
+			{ id: "hh-gulkand", name: "Gulkand Garden", price: 0, default: false },
+			{ id: "hh-date-choc", name: "Date Chocolate", price: 0, default: false },
+			{ id: "hh-banana", name: "Banana Bread", price: 0, default: false },
+			{ id: "hh-apple", name: "Apple Crumble", price: 0, default: false },
+			{ id: "hh-rasp-pb", name: "Raspberry Peanut Butter", price: 0, default: false },
+			{ id: "hh-blueberry", name: "Blueberry Pie", price: 0, default: false },
+			{ id: "hh-mango-coc", name: "Mango Coconut Crunch", price: 0, default: false },
+			{ id: "hh-mango-choc", name: "Mango Chocolate", price: 0, default: false },
 		],
 	},
 ];
@@ -170,8 +170,22 @@ const items = [
 	{ id: "date-choc", categoryId: "oatmeal", name: "Date Chocolate", description: "Creamy peanut butter oats sweetened with honey, topped with chopped dates, chocolate, seeds, peanuts and a hint of toasted coconut crunch.", price: 180, image: "images/date_chocolate_oatmeal.jpg" },
 	{ id: "banana", categoryId: "oatmeal", name: "Banana Bread", description: "Cozy and comforting, this oatmeal captures the essence of banana bread with creamy banana puree, aromatic cinnamon and a touch of vanilla. Topped with banana slices, crunchy walnuts and hearty seeds, it’s a naturally sweet, fibre rich bowl perfect for a nourishing start.", price: 170, image: "images/banana_bread.png" },
 	{ id: "apple", categoryId: "oatmeal", name: "Apple Crumble", description: "A cozy blend of overnight oats and creamy milk, gently flavoured with cinnamon, sweetened with honey and enriched by apple slices and pomegranate. Topped with chewy raisins, buttery cashews and a crunchy trio of seeds.", price: 190, image: "images/apple_crumble.jpeg" },
-	{ id: "rasp-pb", categoryId: "oatmeal", name: "Raspberry Peanut Butter", description: "Bursting with berry goodness and nutty richness, this bowl brings together a lush swirl of raspberry purée with creamy peanut butter. Finished with crunchy walnuts and a nourishing mix of chia, flax, pumpkin and sunflower seeds it’s a playful yet wholesome way to power your morning", price: 180, image: "images/raspberry_peabut_butter.png" },
-	{ id: "blueberry", categoryId: "oatmeal", name: "Blueberry Pie", description: "A comforting blend of rolled oats and creamy Dairy Milk, infused with juicy blueberries, warm cinnamon, vanilla and a touch of honey. Topped with coconut flakes and a nourishing mix of chia, flax, pumpkin and sunflower seeds, this bowl brings the sweet, spiced essence of a blueberry pie to your morning ritual.", price: 190, image: "images/blueberry.png" },
+	{
+		id: "rasp-pb",
+		categoryId: "oatmeal",
+		name: "Raspberry Peanut Butter",
+		description: "Bursting with berry goodness and nutty richness, this bowl brings together a lush swirl of raspberry purée with creamy peanut butter. Finished with crunchy walnuts and a nourishing mix of chia, flax, pumpkin and sunflower seeds it’s a playful yet wholesome way to power your morning",
+		price: 180,
+		image: "images/raspberry_peabut_butter.png",
+	},
+	{
+		id: "blueberry",
+		categoryId: "oatmeal",
+		name: "Blueberry Pie",
+		description: "A comforting blend of rolled oats and creamy Dairy Milk, infused with juicy blueberries, warm cinnamon, vanilla and a touch of honey. Topped with coconut flakes and a nourishing mix of chia, flax, pumpkin and sunflower seeds, this bowl brings the sweet, spiced essence of a blueberry pie to your morning ritual.",
+		price: 190,
+		image: "images/blueberry.png",
+	},
 	{ id: "mango-coc", categoryId: "oatmeal", name: "Mango Coconut Crunch", description: "Creamy oats blended with sweet mango and honey, layered with fresh mango bites, coconut flakes, a balanced mix of seeds and nuts for crunchy finish.", price: 200, image: "images/mango_oatmeal.png" },
 	{ id: "mango-choc", categoryId: "oatmeal", name: "Mango Chocolate", description: " Loaded with juicy mango cubes and creamy chocolate oats, this bowl combines tropical sweetness with rich cocoa flavours. Finished with pista and crunchy seeds for the perfect texture.", price: 210, image: "images/mango_choco_oatmeal.jpeg" },
 
@@ -206,13 +220,177 @@ const items = [
 ];
 
 /* ============================================================
+   FIREBASE
+   ============================================================ */
+const firebaseConfig = {
+	apiKey: "AIzaSyChh6vQfvXi5ilRd4xfvNXvrbLZDJSaj6c",
+	authDomain: "more-than-oats.firebaseapp.com",
+	projectId: "more-than-oats",
+	storageBucket: "more-than-oats.firebasestorage.app",
+	messagingSenderId: "470871378959",
+	appId: "1:470871378959:web:ee81a176e4f7c8e12b677a",
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+let currentUser = null;
+let confirmationResult = null;
+let otpSent = false;
+
+function initAuth() {
+	auth.onAuthStateChanged((fbUser) => {
+		currentUser = fbUser ? { uid: fbUser.uid, phoneNumber: fbUser.phoneNumber } : null;
+		updateAuthIcon();
+		// If sheet is open, refresh its content (e.g. OTP verified → show logged-in state)
+		if (!document.getElementById("auth-sheet").classList.contains("hidden")) {
+			otpSent = false;
+			renderAuthSheet();
+		}
+	});
+}
+
+function updateAuthIcon() {
+	const btn = document.getElementById("auth-icon-btn");
+	const dot = document.getElementById("auth-dot");
+	if (!btn || !dot) return;
+	if (currentUser) {
+		dot.classList.remove("hidden");
+		btn.setAttribute("aria-label", "Signed in");
+	} else {
+		dot.classList.add("hidden");
+		btn.setAttribute("aria-label", "Sign in");
+	}
+}
+
+function openAuthSheet() {
+	renderAuthSheet();
+	document.getElementById("auth-backdrop").classList.remove("hidden");
+	const sheet = document.getElementById("auth-sheet");
+	sheet.classList.remove("hidden");
+	requestAnimationFrame(() => sheet.classList.add("sheet-open"));
+	document.body.style.overflow = "hidden";
+}
+
+function closeAuthSheet() {
+	const sheet = document.getElementById("auth-sheet");
+	sheet.classList.remove("sheet-open");
+	setTimeout(() => {
+		sheet.classList.add("hidden");
+		document.getElementById("auth-backdrop").classList.add("hidden");
+		document.body.style.overflow = "";
+	}, 310);
+}
+
+function renderAuthSheet() {
+	const content = document.getElementById("auth-sheet-content");
+	if (!content) return;
+
+	if (currentUser) {
+		content.innerHTML = `
+			<div class="auth-sheet-body">
+				<div class="auth-check-circle">✓</div>
+				<div class="auth-sheet-title">Signed In</div>
+				<div class="auth-sheet-phone">${currentUser.phoneNumber}</div>
+				<button class="auth-signout-btn" onclick="signOutUser()">Sign Out</button>
+			</div>`;
+		return;
+	}
+
+	if (otpSent) {
+		content.innerHTML = `
+			<div class="auth-sheet-body">
+				<div class="auth-sheet-title">Enter OTP</div>
+				<p class="auth-sheet-subtitle">Sent to your phone number</p>
+				<div class="auth-input-row">
+					<input id="auth-otp-input" class="auth-input" type="number" placeholder="6-digit code"
+					       onkeydown="if(event.key==='Enter') verifyOTP()">
+					<button class="auth-btn" onclick="verifyOTP()">Verify</button>
+				</div>
+				<div id="auth-msg" class="auth-msg"></div>
+			</div>`;
+		setTimeout(() => document.getElementById("auth-otp-input")?.focus(), 50);
+		return;
+	}
+
+	content.innerHTML = `
+		<div class="auth-sheet-body">
+			<div class="auth-sheet-title">Sign In</div>
+			<p class="auth-sheet-subtitle">Enter your number to get started</p>
+			<div class="auth-input-row">
+				<span class="auth-prefix">+91</span>
+				<input id="auth-phone-input" class="auth-input" type="tel" placeholder="Phone number" maxlength="10"
+				       onkeydown="if(event.key==='Enter') sendOTP()">
+				<button class="auth-btn" onclick="sendOTP()">Send OTP</button>
+			</div>
+			<div id="auth-msg" class="auth-msg"></div>
+		</div>`;
+	setTimeout(() => document.getElementById("auth-phone-input")?.focus(), 50);
+}
+
+function setupRecaptcha() {
+	if (!window.recaptchaVerifier) {
+		window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container", { size: "invisible" });
+	}
+}
+
+async function sendOTP() {
+	const raw = (document.getElementById("auth-phone-input")?.value || "").replace(/\D/g, "");
+	if (raw.length !== 10) {
+		setAuthMsg("Enter a valid 10-digit number", "error");
+		return;
+	}
+	setAuthMsg("Sending OTP…", "info");
+	try {
+		setupRecaptcha();
+		confirmationResult = await auth.signInWithPhoneNumber(`+91${raw}`, window.recaptchaVerifier);
+		otpSent = true;
+		renderAuthSheet();
+	} catch (e) {
+		console.log(e);
+		window.recaptchaVerifier = null;
+		setAuthMsg("Couldn't send OTP. Try again.", "error");
+	}
+}
+
+async function verifyOTP() {
+	const code = (document.getElementById("auth-otp-input")?.value || "").trim();
+	if (code.length !== 6) {
+		setAuthMsg("Enter the 6-digit code", "error");
+		return;
+	}
+	setAuthMsg("Verifying…", "info");
+	try {
+		await confirmationResult.confirm(code);
+		// onAuthStateChanged fires → renderAuthSheet shows logged-in state
+	} catch (e) {
+		setAuthMsg("Wrong OTP. Try again.", "error");
+	}
+}
+
+function signOutUser() {
+	auth.signOut();
+	currentUser = null;
+	otpSent = false;
+	updateAuthIcon();
+	renderAuthSheet();
+}
+
+function setAuthMsg(msg, type) {
+	const el = document.getElementById("auth-msg");
+	if (el) {
+		el.textContent = msg;
+		el.className = `auth-msg auth-msg-${type}`;
+	}
+}
+
+/* ============================================================
    APP STATE
    ============================================================ */
 let cart = []; // Array of cart entries (see addFromSheet for structure)
 let activeCategory = "all";
 let sheetItemId = null;
 let sheetSelections = {}; // { groupId: Set<addonId> }
-let appliedPromo = null;  // { code, discountAmount } or null
+let appliedPromo = null; // { code, discountAmount } or null
 let showPromoInput = false;
 
 let carouselIndex = 0;
@@ -222,6 +400,7 @@ let carouselTimer = null;
    INIT
    ============================================================ */
 document.addEventListener("DOMContentLoaded", () => {
+	initAuth();
 	initCarousel();
 	renderOfferStrip();
 	renderMenu();
@@ -308,8 +487,7 @@ function calcAutoDiscount(subtotal) {
 	const s = subtotal ?? cartTotal();
 	let discount = 0;
 	offers.forEach((o) => {
-		if (s >= o.minCart)
-			discount += Math.min(Math.floor((s * o.discountPercent) / 100), o.maxDiscount);
+		if (s >= o.minCart) discount += Math.min(Math.floor((s * o.discountPercent) / 100), o.maxDiscount);
 	});
 	return discount;
 }
@@ -322,17 +500,14 @@ function cartDiscount(subtotal) {
 function nextOfferNudge(subtotal) {
 	if (appliedPromo) return null;
 	const s = subtotal ?? cartTotal();
-	const next = offers
-		.filter((o) => s < o.minCart)
-		.sort((a, b) => a.minCart - b.minCart)[0];
+	const next = offers.filter((o) => s < o.minCart).sort((a, b) => a.minCart - b.minCart)[0];
 	if (!next) return null;
 	return `🏷 Add ₹${next.minCart - s} more to get ${next.discountPercent}% off`;
 }
 
 function calcPromoDiscount(promo, cartValue) {
 	if (promo.type === "flat") return promo.discount;
-	if (promo.type === "percent")
-		return Math.min(Math.floor((cartValue * promo.discountPercent) / 100), promo.maxDiscount);
+	if (promo.type === "percent") return Math.min(Math.floor((cartValue * promo.discountPercent) / 100), promo.maxDiscount);
 	return 0;
 }
 
@@ -379,22 +554,26 @@ function removePromoCode() {
 
 function setPromoMsg(msg, type) {
 	const el = document.getElementById("promo-msg");
-	if (el) { el.textContent = msg; el.className = `promo-msg promo-${type}`; }
+	if (el) {
+		el.textContent = msg;
+		el.className = `promo-msg promo-${type}`;
+	}
 }
 
 function renderOfferStrip() {
 	const strip = document.getElementById("offer-strip");
 	if (!strip || !offers.length) return;
-	strip.innerHTML = offers
-		.map((o) => `<div class="offer-pill">🏷 ${o.label}</div>`)
-		.join("");
+	strip.innerHTML = offers.map((o) => `<div class="offer-pill">🏷 ${o.label}</div>`).join("");
 }
 
 function updateCartNudge() {
 	const nudge = document.getElementById("cart-nudge");
 	if (!nudge) return;
 	const cartViewOpen = !document.getElementById("cart-view").classList.contains("hidden");
-	if (cartViewOpen) { nudge.classList.add("hidden"); return; }
+	if (cartViewOpen) {
+		nudge.classList.add("hidden");
+		return;
+	}
 	const msg = cartItemCount() > 0 ? nextOfferNudge() : null;
 	if (msg) {
 		nudge.textContent = msg;
@@ -648,9 +827,7 @@ function updateSheetButton(groups) {
 	// Show nudge above Add button: project cart total if this item is added
 	const currentCart = cartTotal();
 	const projectedTotal = currentCart + price;
-	const nudgeMsg = currentCart === 0
-		? (offers.length ? `🏷 ${offers[0].label}` : null)
-		: nextOfferNudge(projectedTotal);
+	const nudgeMsg = currentCart === 0 ? (offers.length ? `🏷 ${offers[0].label}` : null) : nextOfferNudge(projectedTotal);
 	let nudgeEl = document.getElementById("sheet-offer-nudge");
 	if (!nudgeEl) {
 		nudgeEl = document.createElement("div");
@@ -827,20 +1004,28 @@ function renderCart() {
       <div class="bill-row bill-total"><span>Total</span><span>₹${total - cartDiscount()}</span></div>
     </div>
 
-    ${!appliedPromo ? `
+    ${
+			!appliedPromo
+				? `
     <div class="promo-section">
-      ${!showPromoInput ? `
+      ${
+				!showPromoInput
+					? `
         <button class="promo-toggle-btn" onclick="togglePromoInput()">🏷 Apply Promo Code</button>
-      ` : `
+      `
+					: `
         <div class="promo-input-wrap">
           <input id="promo-input" class="promo-input" type="text" placeholder="Enter promo code"
                  style="text-transform:uppercase" onkeydown="if(event.key==='Enter') applyPromoCode()">
           <button class="promo-apply-btn" onclick="applyPromoCode()">Apply</button>
         </div>
         <div id="promo-msg" class="promo-msg"></div>
-      `}
+      `
+			}
     </div>
-    ` : ""}
+    `
+				: ""
+		}
 
     <button class="whatsapp-btn" id="send-btn" onclick="sendToWhatsApp()">
       Send Order on WhatsApp →
