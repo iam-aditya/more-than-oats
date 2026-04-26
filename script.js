@@ -233,6 +233,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const db   = firebase.firestore();
 
 let currentUser = null;
 let confirmationResult = null;
@@ -242,6 +243,7 @@ function initAuth() {
 	auth.onAuthStateChanged((fbUser) => {
 		currentUser = fbUser ? { uid: fbUser.uid, phoneNumber: fbUser.phoneNumber } : null;
 		updateAuthIcon();
+		if (fbUser) saveUserPhone(fbUser.uid, fbUser.phoneNumber);
 		if (!document.getElementById("auth-sheet").classList.contains("hidden")) {
 			otpSent = false;
 			renderAuthSheet();
@@ -251,6 +253,10 @@ function initAuth() {
 			renderCart();
 		}
 	});
+}
+
+function saveUserPhone(uid, phoneNumber) {
+	db.collection("users").doc(uid).set({ phone: phoneNumber }, { merge: true });
 }
 
 function updateAuthIcon() {
@@ -543,29 +549,40 @@ function calcPromoDiscount(promo, cartValue) {
 	return 0;
 }
 
-function validatePromoCode(code, phoneNumber) {
-	return new Promise((resolve) => {
-		setTimeout(
-			() => {
-				const codes = {
-					// OATS10: { type: "percent", discountPercent: 10, maxDiscount: 80, minCart: 200 },
-					// FLAT50: { type: "flat", discount: 50, minCart: 300 },
-					// VIP100: { type: "flat", discount: 100, minCart: 400, allowedPhone: "9999999999" },
-				};
-				const promo = codes[code.toUpperCase()];
-				if (!promo) {
-					resolve({ valid: false, message: "Invalid promo code." });
-					return;
-				}
-				if (promo.allowedPhone && promo.allowedPhone !== (phoneNumber || "").replace("+91", "")) {
-					resolve({ valid: false, message: "This code isn't valid for your account." });
-					return;
-				}
-				resolve({ valid: true, promo });
-			},
-			1000 + Math.random() * 400,
-		);
-	});
+async function validatePromoCode(code, phoneNumber) {
+	// Test phone bypasses Firestore entirely
+	if ((phoneNumber || "").replace("+91", "") === TEST_PHONE) {
+		return { valid: true, promo: { type: "percent", discountPercent: 10, maxDiscount: 80, minCart: 0 } };
+	}
+
+	// 1. Fetch promo code document
+	const promoDoc = await db.collection("promoCodes").doc(code).get();
+	if (!promoDoc.exists) {
+		return { valid: false, message: "Invalid promo code." };
+	}
+	const promo = promoDoc.data();
+
+	// 2. Check validity window
+	const today = new Date().toISOString().slice(0, 10);
+	if (promo.startDate && today < promo.startDate) {
+		return { valid: false, message: "This promo isn't active yet." };
+	}
+	if (promo.endDate && today > promo.endDate) {
+		return { valid: false, message: "This promo code has expired." };
+	}
+
+	// 3. Check if this phone has already used this promo campaign
+	const promoKey = `${code}_${promo.endDate || "noexpiry"}`;
+	const usageSnap = await db.collection("promo_usage")
+		.where("phone", "==", phoneNumber)
+		.where("promoCode", "==", promoKey)
+		.limit(1)
+		.get();
+	if (!usageSnap.empty) {
+		return { valid: false, message: "You've already used this code." };
+	}
+
+	return { valid: true, promo, promoKey };
 }
 
 async function applyPromoCode() {
@@ -592,7 +609,7 @@ async function applyPromoCode() {
 		return;
 	}
 
-	appliedPromo = { code, discountAmount: calcPromoDiscount(result.promo, total) };
+	appliedPromo = { code, discountAmount: calcPromoDiscount(result.promo, total), promoKey: result.promoKey };
 	renderCart();
 }
 
@@ -1158,6 +1175,13 @@ function buildWhatsAppMessage() {
 }
 
 function sendToWhatsApp() {
+	if (appliedPromo?.promoKey && currentUser?.phoneNumber && (currentUser.phoneNumber || "").replace("+91", "") !== TEST_PHONE) {
+		db.collection("promo_usage").add({
+			phone:     currentUser.phoneNumber,
+			promoCode: appliedPromo.promoKey,
+			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+		});
+	}
 	const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(buildWhatsAppMessage())}`;
 	window.open(url, "_blank");
 }
