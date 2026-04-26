@@ -555,21 +555,20 @@ async function validatePromoCode(code, phoneNumber) {
 		return { valid: true, promo: { type: "percent", discountPercent: 10, maxDiscount: 80, minCart: 0 } };
 	}
 
-	// 1. Fetch promo code document
-	const promoDoc = await db.collection("promoCodes").doc(code).get();
-	if (!promoDoc.exists) {
+	// 1. Fetch all promos with this code and find the active one
+	const today = new Date().toISOString().slice(0, 10);
+	const snap = await db.collection("promoCodes").where("code", "==", code).get();
+	if (snap.empty) {
 		return { valid: false, message: "Invalid promo code." };
 	}
-	const promo = promoDoc.data();
-
-	// 2. Check validity window
-	const today = new Date().toISOString().slice(0, 10);
-	if (promo.startDate && today < promo.startDate) {
-		return { valid: false, message: "This promo isn't active yet." };
-	}
-	if (promo.endDate && today > promo.endDate) {
+	const activeDoc = snap.docs.find((d) => {
+		const p = d.data();
+		return (!p.startDate || today >= p.startDate) && (!p.endDate || today <= p.endDate);
+	});
+	if (!activeDoc) {
 		return { valid: false, message: "This promo code has expired." };
 	}
+	const promo = activeDoc.data();
 
 	// 3. Check if this phone has already used this promo campaign
 	const promoKey = `${code}_${promo.endDate || "noexpiry"}`;
