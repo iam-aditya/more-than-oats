@@ -191,19 +191,19 @@ const items = [
 	{ id: "mango-choc", categoryId: "oatmeal", name: "Mango Chocolate", description: " Loaded with juicy mango cubes and creamy chocolate oats, this bowl combines tropical sweetness with rich cocoa flavours. Finished with pista and crunchy seeds for the perfect texture.", price: 210, image: "images/mango_choco_oatmeal.jpeg" },
 
 	// YOGURT BOWL
-	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit", description: "Protein rich yogurt layered with fresh fruits like apple, banana, pomegranate, finished with granola for a nourishing, fiber packed and guilt free treat.", price: 210, image: "images/mixed_fruit_yogurt.png" },
-	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry", description: "Creamy yogurt topped with juicy blueberries and tangy raspberries, finished with crunchy granola a perfect balance of sweet, tart and wholesome goodness packed with antioxidants.", price: 220, image: "images/mixed_berry_yogurt.png" },
-	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate", description: "Creamy chocolate yogurt topped with fresh banana slices, crunchy chocolate granola, rich chocolate chips and a smooth peanut butter drizzle, offering a perfect balance of indulgent flavour and wholesome nutrition.", price: 210, image: "images/chocolate_peanut_butter_yogurt.png" },
+	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit Yogurt Bowl", description: "Protein rich yogurt layered with fresh fruits like apple, banana, pomegranate, finished with granola for a nourishing, fiber packed and guilt free treat.", price: 210, image: "images/mixed_fruit_yogurt.png" },
+	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry Yogurt Bowl", description: "Creamy yogurt topped with juicy blueberries and tangy raspberries, finished with crunchy granola a perfect balance of sweet, tart and wholesome goodness packed with antioxidants.", price: 220, image: "images/mixed_berry_yogurt.png" },
+	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate Yogurt Bowl", description: "Creamy chocolate yogurt topped with fresh banana slices, crunchy chocolate granola, rich chocolate chips and a smooth peanut butter drizzle, offering a perfect balance of indulgent flavour and wholesome nutrition.", price: 210, image: "images/chocolate_peanut_butter_yogurt.png" },
 
 	// SMOOTHIE BOWL
-	{ id: "sb-mango", categoryId: "smoothie", name: "Tropical Mango", description: "A thick, creamy smoothie made with ripe, naturally sweet mangoes. Topped with juicy mango chunks, crunchy muesli, and delicate coconut flakes for a refreshing tropical crunch. Light, wholesome, and perfect for a guilt-free treat.", price: 220, image: "images/mango_smoothie.png" },
-	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate", description: "Creamy chocolate smoothie bowl blended with oats, chocolate and topped with crunchy muesli, seasonal fruit, chia seed, dark chocolate, crunchy peanut butter and no added sugar.", price: 190, image: "images/choco_smoothie.jpeg" },
+	{ id: "sb-mango", categoryId: "smoothie", name: "Tropical Mango Smoothie", description: "A thick, creamy smoothie made with ripe, naturally sweet mangoes. Topped with juicy mango chunks, crunchy muesli, and delicate coconut flakes for a refreshing tropical crunch. Light, wholesome, and perfect for a guilt-free treat.", price: 220, image: "images/mango_smoothie.png" },
+	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate SMoothie", description: "Creamy chocolate smoothie bowl blended with oats, chocolate and topped with crunchy muesli, seasonal fruit, chia seed, dark chocolate, crunchy peanut butter and no added sugar.", price: 190, image: "images/choco_smoothie.jpeg" },
 
 	// FRUIT SALAD
 	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon cubes tossed with feta cheese, mint leaves for a cooling, mildly sweet and salty salad.", price: 90, image: "images/watermelon_salad.png" },
 
 	// CHIA PUDDING
-	{ id: "chia-mango", categoryId: "chia", name: "Mango", description: "Silky smooth blended chia pudding layered with sweet mango pure, topped with fresh mango chunks and dry fruits. Naturally rich in fibre and nutrients. Light, filling and perfect for a healthy indulgence.", price: 210, image: "images/mango_chia.jpeg" },
+	{ id: "chia-mango", categoryId: "chia", name: "Mango Chia Pudding", description: "Silky smooth blended chia pudding layered with sweet mango pure, topped with fresh mango chunks and dry fruits. Naturally rich in fibre and nutrients. Light, filling and perfect for a healthy indulgence.", price: 210, image: "images/mango_chia.jpeg" },
 
 	// DESSERT OATBOWL
 	{ id: "cookies", categoryId: "dessert", name: "Cream and Cookies", description: " Creamy oatmeal made with creamy instant oats, milk, honey, chia seeds, layered Greek yoghurt, topped with chocolate chips and crunchy Oreo cookies.", price: 150, image: "images/cream_n_cookies.jpg" },
@@ -211,9 +211,9 @@ const items = [
 	{ id: "snickers", categoryId: "dessert", name: "Snickers", description: "Creamy oats topped with chocolate, date caramel and crunchy nuts. No added sugar, no guilt. The healthy snickers you did not know you needed.", price: 150, image: "images/snickers.png" },
 
 	// PROTEIN MILKSHAKE (with 15g MB Protein Powder included)
-	{ id: "ms-choc", categoryId: "milkshake", name: "Chocolate", description: "A creamy chocolate milkshake made with muscleblaze chocolate whey protein [15 g] and no added sugar. Deliciously nourishing and power packed.", price: 170, image: "images/chocolate_milkshake.png" },
-	{ id: "ms-berry", categoryId: "milkshake", name: "Berry", description: "A rich, creamy berry milkshake loaded with 15g muscleblaze whey protein goodness for a deliciously healthy boost anytime.", price: 200, image: "" },
-	{ id: "ms-mocha", categoryId: "milkshake", name: "Mocha", description: "A bold fusion of coffee and chocolate in a thick, creamy milkshake loaded with 15g Muscleblaze whey protein to boost your energy and keep you going.", price: 180, image: "" },
+	{ id: "ms-choc", categoryId: "milkshake", name: "Chocolate Protein Milkshake", description: "A creamy chocolate milkshake made with muscleblaze chocolate whey protein [15 g] and no added sugar. Deliciously nourishing and power packed.", price: 170, image: "images/chocolate_milkshake.png" },
+	{ id: "ms-berry", categoryId: "milkshake", name: "Berry Protein Milkshake", description: "A rich, creamy berry milkshake loaded with 15g muscleblaze whey protein goodness for a deliciously healthy boost anytime.", price: 200, image: "" },
+	{ id: "ms-mocha", categoryId: "milkshake", name: "Mocha Protein Milkshake", description: "A bold fusion of coffee and chocolate in a thick, creamy milkshake loaded with 15g Muscleblaze whey protein to boost your energy and keep you going.", price: 180, image: "" },
 
 	// HALF & HALF OATMEAL
 	{ id: "hh-300", categoryId: "halfhalf", name: "Half & Half — 300ml", description: "Choose any two oatmeal flavours in one 300ml bowl", price: 200, image: "images/halfnhalf_oatmeal.png" },
@@ -233,7 +233,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
-const db   = firebase.firestore();
+const db = firebase.firestore();
 
 let currentUser = null;
 let confirmationResult = null;
@@ -572,11 +572,7 @@ async function validatePromoCode(code, phoneNumber) {
 
 	// 3. Check if this phone has already used this promo campaign
 	const promoKey = `${code}_${promo.endDate || "noexpiry"}`;
-	const usageSnap = await db.collection("promo_usage")
-		.where("phone", "==", phoneNumber)
-		.where("promoCode", "==", promoKey)
-		.limit(1)
-		.get();
+	const usageSnap = await db.collection("promo_usage").where("phone", "==", phoneNumber).where("promoCode", "==", promoKey).limit(1).get();
 	if (!usageSnap.empty) {
 		return { valid: false, message: "You've already used this code." };
 	}
@@ -1176,7 +1172,7 @@ function buildWhatsAppMessage() {
 function sendToWhatsApp() {
 	if (appliedPromo?.promoKey && currentUser?.phoneNumber && (currentUser.phoneNumber || "").replace("+91", "") !== TEST_PHONE) {
 		db.collection("promo_usage").add({
-			phone:     currentUser.phoneNumber,
+			phone: currentUser.phoneNumber,
 			promoCode: appliedPromo.promoKey,
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 		});
