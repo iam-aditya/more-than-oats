@@ -52,7 +52,8 @@ const promoCodes = [
 const categories = [
 	{ id: "oatmeal", name: "Oatmeal Bowl", addonGroupIds: ["size", "dry_fruits", "seeds", "protein_powder", "extras", "sweetener", "milk"] },
 	{ id: "yogurt", name: "Yogurt Bowl", addonGroupIds: ["dry_fruits", "seeds", "extras", "sweetener", "milk"] },
-	{ id: "smoothie", name: "Smoothie Bowl", addonGroupIds: ["dry_fruits", "seeds", "extras", "sweetener"] },
+	{ id: "smoothie", name: "Smoothie Bowl", addonGroupIds: [] },
+	{ id: "fruit_smoothie", name: "Fruit Smoothies", addonGroupIds: [] },
 	{ id: "fruit_salad", name: "Fruit Salad", addonGroupIds: [] },
 	{ id: "chia", name: "Chia Pudding", addonGroupIds: ["sweetener", "milk"] },
 	{ id: "dessert", name: "Dessert Oatbowl", addonGroupIds: [] },
@@ -134,9 +135,9 @@ const addonGroups = [
 		min: 1,
 		max: 1,
 		addons: [
-			{ id: "dairy", name: "Dairy", price: 0, default: true },
-			{ id: "almond-milk", name: "Almond", price: 60, default: false },
-			{ id: "oat-milk", name: "Oat", price: 40, default: false },
+			{ id: "dairy", name: "Dairy Milk", price: 0, default: true },
+			{ id: "almond-milk", name: "Almond Milk", price: 60, default: false },
+			{ id: "oat-milk", name: "Oat Milk", price: 40, default: false },
 		],
 	},
 	{
@@ -191,13 +192,15 @@ const items = [
 	{ id: "mango-choc", categoryId: "oatmeal", name: "Mango Chocolate", description: " Loaded with juicy mango cubes and creamy chocolate oats, this bowl combines tropical sweetness with rich cocoa flavours. Finished with pista and crunchy seeds for the perfect texture.", price: 210, image: "images/mango_choco_oatmeal.jpeg" },
 
 	// YOGURT BOWL
-	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit Yogurt Bowl", description: "Protein rich yogurt layered with fresh fruits like apple, banana, pomegranate, finished with granola for a nourishing, fiber packed and guilt free treat.", price: 210, image: "images/mixed_fruit_yogurt.png" },
-	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry Yogurt Bowl", description: "Creamy yogurt topped with juicy blueberries and tangy raspberries, finished with crunchy granola a perfect balance of sweet, tart and wholesome goodness packed with antioxidants.", price: 220, image: "images/mixed_berry_yogurt.png" },
-	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate Yogurt Bowl", description: "Creamy chocolate yogurt topped with fresh banana slices, crunchy chocolate granola, rich chocolate chips and a smooth peanut butter drizzle, offering a perfect balance of indulgent flavour and wholesome nutrition.", price: 210, image: "images/chocolate_peanut_butter_yogurt.png" },
+	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit Yogurt Bowl", description: "Protein rich yogurt layered with fresh fruits like apple, banana, pomegranate, finished with granola for a nourishing, fiber packed and guilt free treat.", price: 249, image: "images/mixed_fruit_yogurt.png" },
+	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry Yogurt Bowl", description: "Creamy yogurt topped with juicy blueberries and tangy raspberries, finished with crunchy granola a perfect balance of sweet, tart and wholesome goodness packed with antioxidants.", price: 259, image: "images/mixed_berry_yogurt.png" },
+	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate Yogurt Bowl", description: "Creamy chocolate yogurt topped with fresh banana slices, crunchy chocolate granola, rich chocolate chips and a smooth peanut butter drizzle, offering a perfect balance of indulgent flavour and wholesome nutrition.", price: 249, image: "images/chocolate_peanut_butter_yogurt.png" },
 
 	// SMOOTHIE BOWL
-	{ id: "sb-mango", categoryId: "smoothie", name: "Tropical Mango Smoothie", description: "A thick, creamy smoothie made with ripe, naturally sweet mangoes. Topped with juicy mango chunks, crunchy muesli, and delicate coconut flakes for a refreshing tropical crunch. Light, wholesome, and perfect for a guilt-free treat.", price: 220, image: "images/mango_smoothie.png" },
-	{ id: "sb-choc", categoryId: "smoothie", name: "Chocolate SMoothie", description: "Creamy chocolate smoothie bowl blended with oats, chocolate and topped with crunchy muesli, seasonal fruit, chia seed, dark chocolate, crunchy peanut butter and no added sugar.", price: 190, image: "images/choco_smoothie.jpeg" },
+	// { id: "sb-mango", categoryId: "smoothie", name: "Tropical Mango Smoothie", description: "A thick, creamy smoothie made with ripe, naturally sweet mangoes. Topped with juicy mango chunks, crunchy muesli, and delicate coconut flakes for a refreshing tropical crunch. Light, wholesome, and perfect for a guilt-free treat.", price: 220, image: "images/mango_smoothie.png" },
+	// { id: "sb-choc", categoryId: "smoothie", name: "Chocolate SMoothie", description: "Creamy chocolate smoothie bowl blended with oats, chocolate and topped with crunchy muesli, seasonal fruit, chia seed, dark chocolate, crunchy peanut butter and no added sugar.", price: 190, image: "images/choco_smoothie.jpeg" },
+	{ id: "sb-berry", categoryId: "smoothie", name: "Berrylicious Smoothie Bowl", description: "A naturally sweet mixed berry smoothie bowl blended with raspberry, strawberry and blueberry, topped with crunchy granola and fresh berry chunks for the perfect balance of flavour, texture and antioxidants. [500 g]", price: 389, image: "images/berry_smoothie_bowl.PNG" },
+	{ id: "sb-tropical", categoryId: "smoothie", name: "Tropical Mango Smoothie Bowl", description: "Creamy mango smoothie bowl made with real mangoes, topped with fresh kiwi, strawberries, crunchy granola and pumpkin seeds a refreshing blend of tropical sweetness, fibre and natural goodness. [500 g]", price: 375, image: "images/mango_smoothie_bowl.JPG" },
 
 	// FRUIT SALAD
 	{ id: "fs-water", categoryId: "fruit_salad", name: "Watermelon", description: "Fresh watermelon cubes tossed with feta cheese, mint leaves for a cooling, mildly sweet and salty salad.", price: 90, image: "images/watermelon_salad.png" },
@@ -216,8 +219,15 @@ const items = [
 	{ id: "ms-mocha", categoryId: "milkshake", name: "Mocha Protein Milkshake", description: "A bold fusion of coffee and chocolate in a thick, creamy milkshake loaded with 15g Muscleblaze whey protein to boost your energy and keep you going.", price: 180, image: "" },
 
 	// HALF & HALF OATMEAL
-	{ id: "hh-300", categoryId: "halfhalf", name: "Half & Half — 300ml", description: "Choose any two oatmeal flavours in one 300ml bowl", price: 200, image: "images/halfnhalf_oatmeal.png" },
-	{ id: "hh-500", categoryId: "halfhalf", name: "Half & Half — 500ml", description: "Choose any two oatmeal flavours in a generous 500ml bowl", price: 300, image: "images/halfnhalf_oatmeal.png" },
+	{ id: "hh-300", categoryId: "halfhalf", name: "Half & Half — 300ml", description: "Choose any two oatmeal flavours in one 300ml bowl", price: 250, image: "images/halfnhalf_oatmeal.png" },
+	{ id: "hh-500", categoryId: "halfhalf", name: "Half & Half — 500ml", description: "Choose any two oatmeal flavours in a generous 500ml bowl", price: 350, image: "images/halfnhalf_oatmeal.png" },
+
+	// FRUIT SMOOTHIES
+	{ id: "fs-avocado", categoryId: "fruit_smoothie", name: "Avocado Smoothie", description: "Thick, creamy, mildly sweet avocado smoothie rich in healthy fats [oleic acid], fibre, potassium and vitamins E & K, filling, refreshing and great for clean energy.", price: 209, image: "images/avocado_smoothie.png" },
+	{ id: "fs-blueberry", categoryId: "fruit_smoothie", name: "Blueberry Cinnamon Smoothie", description: "Creamy blueberry cinnamon smoothie rich in antioxidants and fibre, blended with warming cinnamon to support energy, digestion and overall wellness.", price: 189, image: "images/blueberry_smoothie.jpeg" },
+	{ id: "fs-mango", categoryId: "fruit_smoothie", name: "Mango Smoothie", description: "Rich mango smoothie packed with beta carotene, vitamin C & potassium, finished with juicy mango chunks, sweet, refreshing and energizing.", price: 169, image: "images/mango_smoothie.jpeg" },
+	{ id: "fs-papaya", categoryId: "fruit_smoothie", name: "Papaya Smoothie", description: "Refreshing papaya smoothie blended with ripe papaya and soaked chia seeds naturally rich in fiber, antioxidants and omega 3s to support digestion, hydration and sustained energy.", price: 169, image: "images/papaya_smoothie.jpeg" },
+	{ id: "fs-strawberry", categoryId: "fruit_smoothie", name: "Strawberry Smoothie", description: "Naturally sweet strawberry smoothie blended with real strawberries and soaked chia seeds, packed with antioxidants, fibre and omega 3s to support hydration, digestion and natural energy.", price: 169, image: "images/strawberry_smoothie.jpeg" },
 ];
 
 /* ============================================================
@@ -1150,9 +1160,11 @@ function buildWhatsAppMessage() {
 	cart.forEach((e) => {
 		msg += `${e.quantity}x ${e.name} — ₹${e.linePrice * e.quantity}\n`;
 		e.selectedAddons
-			.filter((a) => a.price > 0)
+			.filter((a) => a.price > 0 || a.groupId === "hh_flavors")
 			.forEach((a) => {
-				msg += `   + ${a.name} (+₹${a.price})\n`;
+				msg += a.price > 0
+					? `   + ${a.name} (+₹${a.price})\n`
+					: `   · ${a.name}\n`;
 			});
 		msg += "\n";
 	});
