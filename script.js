@@ -192,6 +192,7 @@ const items = [
 	{ id: "mango-choc", categoryId: "oatmeal", name: "Mango Chocolate", description: " Loaded with juicy mango cubes and creamy chocolate oats, this bowl combines tropical sweetness with rich cocoa flavours. Finished with pista and crunchy seeds for the perfect texture.", price: 210, image: "images/mango_choco_oatmeal.jpeg" },
 
 	// YOGURT BOWL
+	{ id: "y-mango", categoryId: "yogurt", name: "Mango Yogurt Bowl", description: "Creamy Greek yogurt blended with luscious mango purée, topped with juicy mango chunks, crunchy granola, and almonds rich in protein, probiotics, fiber & vitamin C for a deliciously refreshing and wholesome treat.", price: 249, image: "images/mango_yog.png" },
 	{ id: "y-fruit", categoryId: "yogurt", name: "Mixed Fruit Yogurt Bowl", description: "Protein rich yogurt layered with fresh fruits like apple, banana, pomegranate, finished with granola for a nourishing, fiber packed and guilt free treat.", price: 249, image: "images/mixed_fruit_yogurt.png" },
 	{ id: "y-berry", categoryId: "yogurt", name: "Mixed Berry Yogurt Bowl", description: "Creamy yogurt topped with juicy blueberries and tangy raspberries, finished with crunchy granola a perfect balance of sweet, tart and wholesome goodness packed with antioxidants.", price: 259, image: "images/mixed_berry_yogurt.png" },
 	{ id: "y-choc", categoryId: "yogurt", name: "Chocolate Yogurt Bowl", description: "Creamy chocolate yogurt topped with fresh banana slices, crunchy chocolate granola, rich chocolate chips and a smooth peanut butter drizzle, offering a perfect balance of indulgent flavour and wholesome nutrition.", price: 249, image: "images/chocolate_peanut_butter_yogurt.png" },
@@ -1162,9 +1163,7 @@ function buildWhatsAppMessage() {
 		e.selectedAddons
 			.filter((a) => a.price > 0 || a.groupId === "hh_flavors")
 			.forEach((a) => {
-				msg += a.price > 0
-					? `   + ${a.name} (+₹${a.price})\n`
-					: `   · ${a.name}\n`;
+				msg += a.price > 0 ? `   + ${a.name} (+₹${a.price})\n` : `   · ${a.name}\n`;
 			});
 		msg += "\n";
 	});
